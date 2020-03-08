@@ -1,0 +1,25 @@
+<% provide(:title, current_user.name) %>
+<h1><%= current_user.name %>のタスク一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <%= link_to "タスク新規作成", new_user_task_path(current_user), class: "btn btn-lg btn-primary pull-right" %>
+  <table class="table table-condensed table-hover" id="table-tasks">
+    <thead>
+      <tr>
+        <th><%= Task.human_attribute_name :title %></th>
+        <th><%= Task.human_attribute_name :detail %></th>
+      </tr>
+    </thead>
+  
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to "#{task.title}", "#" %></td>
+        <td><%= l(task.created_at, format: :long) %></td>
+        <td align="center">
+          <%= link_to "編集", '#', class: "btn btn-success" %>
+          <%= link_to "削除", "#", method: :delete, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

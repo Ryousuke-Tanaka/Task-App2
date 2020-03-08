@@ -1,0 +1,21 @@
+<% provide(:title, 'New Task')%>
+<% provide(:class_text, 'newtask') %>
+<% provide(:button_text, '新規登録') %>
+<h1>タスク新規作成</h1>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <%= form_with(model: @task, url: user_tasks_path(@user), local: true) do |f| %>
+      
+      <%= f.label :title, class: "label-#{yield(:class_text)}" %>
+      <%= f.text_field :title, class: "form-control" %>
+      
+      <%= f.label :detail, class: "label-#{yield(:class_text)}" %>
+      <%= f.text_area :detail, class: "form-control", size: "40x5" %>
+      
+      <div class="signup-button">
+      <%= f.submit yield(:button_text), class: "btn btn-lg btn-primary btn-#{yield(:button_text)}" %>
+      </div>
+    <% end %>
+  </div>
+</div>
