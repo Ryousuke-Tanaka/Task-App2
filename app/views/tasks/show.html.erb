@@ -14,7 +14,7 @@
       </tr>
       <tr>
         <th class="col-md-3"><%= Task.human_attribute_name :detail %></th>
-          <td class="col-md-9"><%= @task.detail %></td>
+          <td class="col-md-9"><%= simple_format @task.detail %></td>
       </tr>
       <tr>
         <th class="col-md-3"><%= Task.human_attribute_name :created_at %></th>
@@ -27,8 +27,9 @@
     </table>
     <tr>
       <td>
-        <%= link_to "編集", edit_user_task_path(@user, @task), class: "btn btn-lg btn-success" %>
-        <%= link_to "削除", "#", method: :delete, class: "btn  btn-lg btn-danger" %>
+        <%= link_to "編集", edit_user_task_path(@user.id, @task.id), class: "btn btn-lg btn-success" %>
+        <%= link_to "削除", user_task_path(@user.id, @task.id), method: :delete, 
+            data: { confirm: "削除してよろしいですか？" }, class: "btn  btn-lg btn-danger" %>
       </td>
     </tr>
   </div>
