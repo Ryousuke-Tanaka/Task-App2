@@ -7,6 +7,7 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <%= form_with(model: @task, url: user_task_path(@user.id, @task.id), method: :patch, local: true) do |f| %>
+      <%= render 'shared/error_messages', object: @task %>
       
       <%= f.label :title, class: "label-#{yield(:class_text)}" %>
       <%= f.text_field :title, class: "form-control" %>
