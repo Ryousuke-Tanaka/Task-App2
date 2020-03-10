@@ -14,7 +14,7 @@
       <%= f.label :detail, class: "label-#{yield(:class_text)}" %>
       <%= f.text_area :detail, class: "form-control", size: "40x5" %>
       
-      <div class="signup-button">
+      <div class="button">
       <%= f.submit yield(:button_text), class: "btn btn-lg btn-primary btn-#{yield(:button_text)}" %>
       </div>
     <% end %>

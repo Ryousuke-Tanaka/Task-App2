@@ -14,7 +14,9 @@
       </tr>
       <tr>
         <th class="col-md-3"><%= Task.human_attribute_name :detail %></th>
-          <td class="col-md-9"><%= simple_format @task.detail %></td>
+          <td class="col-md-9">
+            <%= simple_format  text_url_to_link(h(@task.detail)).html_safe %>
+          </td>
       </tr>
       <tr>
         <th class="col-md-3"><%= Task.human_attribute_name :created_at %></th>
