@@ -1,12 +1,15 @@
 class TasksController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_current_user, only: [:index, :new, :edit, :create, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
   
   def index
     @tasks = @user.tasks
   end
   
   def show
-    @task = Task.find(params[:id])
   end
   
   def new
@@ -25,14 +28,12 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @task = Task.find(params[:id])
   end
   
   def update
-    @task = Task.find(params[:id])
     if @task.update_attributes(task_params)
       flash[:success] = "タスク情報を更新しました。"
-      redirect_to user_task_url @user
+      redirect_to user_tasks_url @user
     else
       flash.now[:danger] = "タスク更新に失敗しました。"
       render :edit
@@ -40,9 +41,8 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
-    flash[:success] = "#{@user.name}のタスクを削除しました。"
+    flash[:success] = "タスクを削除しました。"
     redirect_to user_tasks_url @user
   end
   
@@ -52,8 +52,22 @@ class TasksController < ApplicationController
       params.require(:task).permit(:title, :detail, :user_id)
     end
     
-    def set_user
-      @user = User.find(params[:user_id])
+    # beforeアクション
+    
+    def set_current_user
+      @user = current_user
     end
-  
+    
+    def set_task
+      @task = Task.find(params[:id])
+    end
+    
+    # 管理権限者、または現在ログインしているユーザーを許可します。
+    def admin_or_correct_user
+      @user = User.find(params[:user_id]) if @user.blank?
+      unless current_user?(@user) || current_user.admin?
+        flash[:danger] = "編集権限がありません。"
+        redirect_to(root_url)
+      end
+    end
 end

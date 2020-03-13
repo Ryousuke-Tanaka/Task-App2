@@ -5,17 +5,6 @@ User.create!( name: "管理者",
               password: "password",
               password_confirmation: "password",
               admin: true)
-
-User.create!( name: "ゲスト管理者",
-              email: "guest-admin@email.com",
-              password: "password",
-              password_confirmation: "password",
-              admin: true)
-
-User.create!( name: "ゲストユーザー",
-              email: "guest@email.com",
-              password: "password",
-              password_confirmation: "password")
               
 100.times do |n|
   name  = Faker::Name.name
@@ -25,4 +14,11 @@ User.create!( name: "ゲストユーザー",
                email: email,
                password: password,
                password_confirmation: password)
+end
+
+@users = User.order(:created_at).take(3)
+50.times do
+  title = Faker::Lorem.sentence(2)
+  detail = Faker::Lorem.sentence(5)
+  @users.each { |user| user.tasks.create!(title: title, detail: detail) }
 end
