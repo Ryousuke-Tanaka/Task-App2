@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_user_id, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_id, only: [:new, :show, :edit, :update, :destroy]
   before_action :set_current_user, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
@@ -12,7 +12,12 @@ class TasksController < ApplicationController
   end
   
   def new
-    @task = Task.new
+    if @user != current_user.id
+      flash[:danger] = "他ユーザーのタスク新規作成はできません。"
+      redirect_to root_url
+    else
+      @task = Task.new
+    end
   end
   
   def create
