@@ -12,7 +12,7 @@ class TasksController < ApplicationController
   end
   
   def new
-    if @user != current_user.id
+    if @user != @task.user_id
       flash[:danger] = "他ユーザーのタスク新規作成はできません。"
       redirect_to root_url
     else
@@ -32,6 +32,10 @@ class TasksController < ApplicationController
   end
   
   def edit
+    if @user.id 
+      flash[:danger] = "他ユーザーのタスク編集はできません。"
+      redirect_to user_tasks_url @user
+    end
   end
   
   def update
