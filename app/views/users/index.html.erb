@@ -24,10 +24,10 @@
         <td class="delete-button">
           <% if current_user.admin? && user.id != 1 %>
             <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-sm btn-danger" %>
+                data: { confirm: "#{user.name}を削除します。よろしいですか？" }, class: "btn btn-sm btn-danger" %>
           <% elsif !current_user.admin? && current_user.id == user.id %>
             <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-sm btn-danger" %>
+                data: { confirm: "#{user.name}を削除します。よろしいですか？" }, class: "btn btn-sm btn-danger" %>
           <% end %>
         </td>
       </tr>

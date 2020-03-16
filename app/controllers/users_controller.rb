@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def edit
     if current_user.admin?
       flash[:danger] = "このユーザーは編集できません。"
-      redirect_to user_url
+      redirect_to user_rul
     end
   end
   

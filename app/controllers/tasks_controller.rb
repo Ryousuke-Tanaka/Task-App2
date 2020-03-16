@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   before_action :logged_in_user
   
   def index
-    @tasks = @user.tasks
+    @tasks = @user.tasks.order(id: "DESC") 
   end
   
   def show
