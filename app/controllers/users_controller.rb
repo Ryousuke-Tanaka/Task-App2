@@ -5,14 +5,19 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:index, :destroy]
   
   def index
-   @users = User.paginate(page: params[:page], per_page: 20)
+    @users = User.paginate(page: params[:page], per_page: 20)
   end
   
   def show
   end
 
   def new
-    @user = User.new
+    if current_user.nil?
+      @user = User.new
+    else
+      flash[:danger] = "すでにログインしています。"
+      redirect_to user_url(current_user)
+    end
   end
   
   def create
